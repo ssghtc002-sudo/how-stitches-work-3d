@@ -702,6 +702,8 @@ def build_anatomical_human_leg_with_3d_wound(scene, skin_mat, wall_mat, fat_mat,
             co_closed[vi] = Vector((p.x, p.y, p.z + v_groove + eversion + dimple_dz + groove_dz))
 
     final_mesh = bpy.data.meshes.new("V21_SurgicalHumanLeg_Mesh")
+    final_mesh.materials.append(skin_mat)
+    final_mesh.materials.append(wall_mat)
     bm.to_mesh(final_mesh)
     bm.free()
     final_mesh.update()
@@ -711,9 +713,6 @@ def build_anatomical_human_leg_with_3d_wound(scene, skin_mat, wall_mat, fat_mat,
     old_d = leg_obj.data
     leg_obj.data = final_mesh
     bpy.data.meshes.remove(old_d)
-    leg_obj.data.materials.clear()
-    leg_obj.data.materials.append(skin_mat)
-    leg_obj.data.materials.append(wall_mat)
 
     sk_basis = leg_obj.shape_key_add(name="Basis", from_mix=False)
     for i, co in enumerate(co_open):
